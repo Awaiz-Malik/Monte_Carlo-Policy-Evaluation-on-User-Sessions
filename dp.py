@@ -1,28 +1,11 @@
-"""
-Dynamic Programming for Policy Evaluation and Improvement
-
-Implements DP algorithms on a toy MDP with known transition dynamics.
-This is separate from the session simulator and demonstrates model-based RL.
-"""
-
 import numpy as np
 
-
 class ToyMDP:
-    """
-    A simple MDP with known transitions for Dynamic Programming.
-    
-    States: {0, 1, 2}
-    Actions: {0: 'scroll', 1: 'click'}
-    """
-    
     def __init__(self):
         self.num_states = 3
         self.num_actions = 2
         self.gamma = 0.9
-        
-        # Transition probabilities: P[s][a] = [(prob, next_state), ...]
-        # Action 0 = 'scroll', Action 1 = 'click'
+
         self.P = {
             0: {  # State 0
                 0: [(0.7, 0), (0.2, 1), (0.1, 2)],  # scroll: mostly stay
@@ -55,16 +38,6 @@ class ToyMDP:
         }
     
     def get_expected_reward(self, s, a):
-        """
-        Compute expected reward for taking action a in state s.
-        
-        Args:
-            s (int): State
-            a (int): Action
-        
-        Returns:
-            float: Expected reward
-        """
         expected_r = 0.0
         for prob, next_s in self.P[s][a]:
             expected_r += prob * self.R[s][a][next_s]
@@ -72,25 +45,6 @@ class ToyMDP:
 
 
 def policy_evaluation(mdp, policy, theta=1e-6, max_iterations=1000):
-    """
-    Evaluate a policy using iterative policy evaluation (DP).
-    
-    Algorithm:
-        Loop until convergence:
-            For each state s:
-                V(s) ← Σ_a π(a|s) Σ_s' P(s'|s,a)[R(s,a,s') + γV(s')]
-    
-    Args:
-        mdp (ToyMDP): MDP specification
-        policy (dict): Policy π(a|s) as {state: {action: probability}}
-        theta (float): Convergence threshold
-        max_iterations (int): Maximum iterations
-    
-    Returns:
-        tuple: (V, num_iterations)
-            - V (np.array): State values
-            - num_iterations (int): Number of iterations until convergence
-    """
     V = np.zeros(mdp.num_states)
     
     for iteration in range(max_iterations):
@@ -123,20 +77,6 @@ def policy_evaluation(mdp, policy, theta=1e-6, max_iterations=1000):
 
 
 def policy_improvement(mdp, V):
-    """
-    Improve policy by making it greedy with respect to V.
-    
-    Algorithm:
-        For each state s:
-            π'(s) = argmax_a Σ_s' P(s'|s,a)[R(s,a,s') + γV(s')]
-    
-    Args:
-        mdp (ToyMDP): MDP specification
-        V (np.array): State values
-    
-    Returns:
-        dict: Improved deterministic policy {state: best_action}
-    """
     improved_policy = {}
     
     for s in range(mdp.num_states):
@@ -158,16 +98,6 @@ def policy_improvement(mdp, V):
 
 
 def print_dp_results(mdp, initial_policy, V_initial, improved_policy, V_improved=None):
-    """
-    Print Dynamic Programming results.
-    
-    Args:
-        mdp (ToyMDP): MDP specification
-        initial_policy (dict): Initial policy
-        V_initial (np.array): Values under initial policy
-        improved_policy (dict): Improved policy
-        V_improved (np.array, optional): Values under improved policy
-    """
     action_names = {0: 'scroll', 1: 'click'}
     
     print(f"\n{'='*60}")
@@ -198,15 +128,6 @@ def print_dp_results(mdp, initial_policy, V_initial, improved_policy, V_improved
 
 
 def run_dp_demo(gamma=0.9):
-    """
-    Run complete DP demonstration.
-    
-    Args:
-        gamma (float): Discount factor
-    
-    Returns:
-        dict: Results containing policies and values
-    """
     # Create MDP
     mdp = ToyMDP()
     mdp.gamma = gamma

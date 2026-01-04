@@ -1,13 +1,3 @@
-"""
-Main execution script for Monte Carlo and Dynamic Programming experiments.
-
-This script orchestrates the complete workflow:
-1. Environment setup and episode generation
-2. First-Visit Monte Carlo prediction
-3. Dynamic Programming (bonus)
-4. Results visualization and saving
-"""
-
 import numpy as np
 from env import SessionEnv, generate_episodes, print_episode_summary
 from mc import first_visit_mc_prediction, print_mc_results
@@ -17,7 +7,6 @@ from utils import (
     save_results_csv, save_episodes_npy, print_value_table,
     create_output_dirs
 )
-
 
 # Configuration
 CONFIG = {
@@ -30,9 +19,6 @@ CONFIG = {
 
 
 def main():
-    """
-    Main execution function.
-    """
     print("="*70)
     print(" Reinforcement Learning Project: Monte Carlo & Dynamic Programming")
     print("="*70)

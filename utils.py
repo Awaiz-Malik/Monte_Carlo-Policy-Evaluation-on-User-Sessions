@@ -1,38 +1,13 @@
-"""
-Utility functions for the RL project.
-
-Includes:
-- Plotting convergence
-- Seeding utilities
-- Result saving
-- Printing helpers
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import json
 import os
 
-
 def set_seed(seed):
-    """
-    Set random seed for reproducibility.
-    
-    Args:
-        seed (int): Random seed
-    """
     np.random.seed(seed)
 
 
 def plot_convergence(V_history, save_path='outputs/convergence.png', gamma=0.9):
-    """
-    Plot convergence of state values over episodes.
-    
-    Args:
-        V_history (dict): {state: [values over episodes]}
-        save_path (str): Path to save the plot
-        gamma (float): Discount factor (for title)
-    """
     plt.figure(figsize=(10, 6))
     
     state_names = {
@@ -68,13 +43,6 @@ def plot_convergence(V_history, save_path='outputs/convergence.png', gamma=0.9):
 
 
 def plot_episode_length_histogram(episodes, save_path='outputs/episode_lengths.png'):
-    """
-    Plot histogram of episode lengths.
-    
-    Args:
-        episodes (list): List of episodes
-        save_path (str): Path to save the plot
-    """
     lengths = [ep['length'] for ep in episodes]
     
     plt.figure(figsize=(10, 6))
@@ -105,13 +73,6 @@ def plot_episode_length_histogram(episodes, save_path='outputs/episode_lengths.p
 
 
 def save_results_csv(V, filename='outputs/mc_values.csv'):
-    """
-    Save state values to CSV file.
-    
-    Args:
-        V (dict): State values
-        filename (str): Output filename
-    """
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     
     with open(filename, 'w') as f:
@@ -123,13 +84,6 @@ def save_results_csv(V, filename='outputs/mc_values.csv'):
 
 
 def save_episodes_json(episodes, filename='data/episodes.json'):
-    """
-    Save episodes to JSON file.
-    
-    Args:
-        episodes (list): List of episodes
-        filename (str): Output filename
-    """
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     
     with open(filename, 'w') as f:
@@ -139,13 +93,6 @@ def save_episodes_json(episodes, filename='data/episodes.json'):
 
 
 def save_episodes_npy(episodes, filename='data/episodes.npy'):
-    """
-    Save episodes to numpy file.
-    
-    Args:
-        episodes (list): List of episodes
-        filename (str): Output filename
-    """
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     
     np.save(filename, episodes, allow_pickle=True)
@@ -153,26 +100,10 @@ def save_episodes_npy(episodes, filename='data/episodes.npy'):
 
 
 def load_episodes_npy(filename='data/episodes.npy'):
-    """
-    Load episodes from numpy file.
-    
-    Args:
-        filename (str): Input filename
-    
-    Returns:
-        list: Episodes
-    """
     return np.load(filename, allow_pickle=True).tolist()
 
 
 def print_value_table(V, title="State Values"):
-    """
-    Pretty-print state value table.
-    
-    Args:
-        V (dict or np.array): State values
-        title (str): Table title
-    """
     state_names = {
         0: 'Passive Browsing',
         1: 'Selective Reading',
@@ -195,14 +126,12 @@ def print_value_table(V, title="State Values"):
 
 
 def create_output_dirs():
-    """Create necessary output directories."""
     os.makedirs('outputs', exist_ok=True)
     os.makedirs('data', exist_ok=True)
     print("Output directories created: outputs/, data/")
 
 
 if __name__ == "__main__":
-    # Quick test
     print("Testing utility functions...")
     
     create_output_dirs()

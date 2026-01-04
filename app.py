@@ -1,13 +1,3 @@
-"""
-Streamlit Web Application for RL Project
-
-Interactive frontend for:
-- Episode generation and exploration
-- Monte Carlo training and visualization
-- Dynamic Programming evaluation and improvement
-- Results comparison and analysis
-"""
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -77,7 +67,6 @@ if 'dp_results' not in st.session_state:
 
 
 def main():
-    """Main Streamlit application."""
     
     # Header
     st.markdown('<div class="main-header">🎓 Reinforcement Learning Project</div>', 
@@ -151,12 +140,12 @@ def main():
             'To 3 (Exit)': [transition_probs[0][3], transition_probs[1][3], transition_probs[2][3]]
         })
         
-        st.dataframe(trans_df, use_container_width=True)
+        st.dataframe(trans_df, width='stretch')
         
         # Episode generation
         st.markdown('<div class="sub-header">Generate Episodes</div>', unsafe_allow_html=True)
         
-        if st.button("🚀 Generate Episodes", type="primary", use_container_width=True):
+        if st.button("🚀 Generate Episodes", type="primary", width='stretch'):
             with st.spinner(f"Generating {n_episodes} episodes..."):
                 set_seed(seed)
                 env = SessionEnv(seed=seed)
@@ -225,7 +214,7 @@ def main():
                 height=400
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
             
             # Sample episodes
             st.markdown('<div class="sub-header">Sample Episodes</div>', unsafe_allow_html=True)
@@ -244,7 +233,7 @@ def main():
                         st.write(f"**Terminal Reward:** {ep['rewards'][-1]}")
             
             # Download episodes
-            if st.button("💾 Download Episodes (JSON)", use_container_width=True):
+            if st.button("💾 Download Episodes (JSON)", width='stretch'):
                 json_str = json.dumps(episodes, indent=2)
                 st.download_button(
                     label="Download JSON",
@@ -272,7 +261,7 @@ def main():
             - Algorithm: First-Visit Monte Carlo
             """)
             
-            if st.button("🎯 Train Monte Carlo", type="primary", use_container_width=True):
+            if st.button("🎯 Train Monte Carlo", type="primary", width='stretch'):
                 with st.spinner("Training Monte Carlo..."):
                     V_mc, V_history = first_visit_mc_prediction(episodes, gamma=gamma)
                     st.session_state.V_mc = V_mc
@@ -334,7 +323,7 @@ def main():
                     hovermode='x unified'
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
                 
                 # Episode explorer
                 st.markdown('<div class="sub-header">Episode Explorer</div>', 
@@ -395,7 +384,7 @@ def main():
             st.write("- Each action has probability 0.5")
         
         if st.button("🧠 Run Policy Evaluation & Improvement", type="primary", 
-                    use_container_width=True):
+                    width='stretch'):
             with st.spinner("Running Dynamic Programming..."):
                 # Initial policy (uniform random)
                 initial_policy = {}
@@ -477,7 +466,7 @@ def main():
                 'Difference': [V_mc[0]-V_dp[0], V_mc[1]-V_dp[1], V_mc[2]-V_dp[2]]
             })
             
-            st.dataframe(comparison_df, use_container_width=True)
+            st.dataframe(comparison_df, width='stretch')
             
             # Comparison chart
             fig = go.Figure()
@@ -504,7 +493,7 @@ def main():
                 height=400
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
             
             # Conceptual comparison
             st.markdown('<div class="sub-header">Conceptual Comparison</div>', 

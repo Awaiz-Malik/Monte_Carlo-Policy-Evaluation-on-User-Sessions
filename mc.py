@@ -1,36 +1,6 @@
-"""
-First-Visit Monte Carlo Prediction for Policy Evaluation
-
-Implements the First-Visit MC algorithm to estimate state values V(s)
-from sampled episodes with delayed, sparse rewards.
-"""
-
 import numpy as np
 
-
 def first_visit_mc_prediction(episodes, gamma=0.9, num_states=3):
-    """
-    Estimate state values using First-Visit Monte Carlo prediction.
-    
-    Algorithm:
-    1. Initialize V(s) = 0 for all states
-    2. For each episode:
-        a. Compute returns G_t for all time steps (backward pass)
-        b. For each state s visited in the episode:
-            - If this is the FIRST visit to s in this episode:
-                - Append G_t to returns[s]
-                - Update V(s) = mean(returns[s])
-    
-    Args:
-        episodes (list): List of episode dictionaries with 'states' and 'rewards'
-        gamma (float): Discount factor
-        num_states (int): Number of non-terminal states (default 3: {0, 1, 2})
-    
-    Returns:
-        tuple: (V, V_history)
-            - V (dict): Final state values {state: value}
-            - V_history (dict): Convergence history {state: [values over episodes]}
-    """
     # Initialize value function
     V = {s: 0.0 for s in range(num_states)}
     
@@ -77,16 +47,6 @@ def first_visit_mc_prediction(episodes, gamma=0.9, num_states=3):
 
 
 def compute_returns_for_episode(episode, gamma=0.9):
-    """
-    Compute returns for a single episode (for visualization/debugging).
-    
-    Args:
-        episode (dict): Episode with 'states' and 'rewards'
-        gamma (float): Discount factor
-    
-    Returns:
-        list: Returns G_t for each time step
-    """
     rewards = episode['rewards']
     
     G = 0.0
@@ -102,15 +62,6 @@ def compute_returns_for_episode(episode, gamma=0.9):
 
 
 def get_first_visit_indices(states):
-    """
-    Find the first occurrence index of each state in the trajectory.
-    
-    Args:
-        states (list): List of states visited
-    
-    Returns:
-        dict: {state: first_index}
-    """
     first_visits = {}
     
     for t, state in enumerate(states):
@@ -121,14 +72,6 @@ def get_first_visit_indices(states):
 
 
 def print_mc_results(V, episodes, gamma):
-    """
-    Print Monte Carlo prediction results.
-    
-    Args:
-        V (dict): State values
-        episodes (list): Training episodes
-        gamma (float): Discount factor
-    """
     print(f"\n{'='*60}")
     print(f"First-Visit Monte Carlo Prediction Results")
     print(f"{'='*60}")
