@@ -42,7 +42,7 @@ source .venv/bin/activate  # Linux/Mac
 
 2. Install dependencies:
 ```bash
-pip install numpy matplotlib streamlit plotly pandas
+pip install -r requirements.txt
 ```
 
 ## 🚀 Usage
@@ -165,7 +165,7 @@ Separate toy MDP with known transitions:
 | **Bootstrap** | No | Yes (uses V estimates) |
 | **Task Type** | Episodic only | Both episodic & continuing |
 
-## 🎓 Course Requirements
+## 🎓 Project Requirements
 
 This implementation satisfies all project requirements:
 
@@ -178,28 +178,3 @@ This implementation satisfies all project requirements:
 ✅ DP bonus (policy evaluation + improvement)  
 ✅ Complete documentation
 
-## 📄 Academic Report
-
-The academic report (`report.pdf`) will be created after implementation verification, covering:
-- Environment design and methodology
-- MC convergence analysis
-- DP results interpretation
-- MC vs DP comparison
-- Effect of sparse/delayed rewards on learning
-
-## 🤝 Contributing
-
-This is a university project. Modifications should maintain:
-- Exact state/reward specifications
-- First-visit MC rule
-- Proper return computation with γ=0.9
-- Episode termination at state 3
-
-## 📧 Contact
-
-For questions or issues, refer to the course materials or instructor.
-
----
-
-**Version**: 1.0  
-**Last Updated**: January 2026
